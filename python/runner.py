@@ -24,7 +24,7 @@ parser.add_argument("day", metavar="D", type=int)
 parser.add_argument(
     "--input_folder",
     default=os.path.join(HERE, "input"),
-    help="path to input folder with files of the form input_01.txt",
+    help="path to input folder with files of the form day_01.txt",
 )
 args = parser.parse_args()
 
