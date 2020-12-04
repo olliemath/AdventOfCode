@@ -1,6 +1,6 @@
 import os
 
-from day_02.solution import parse, num_valid
+from day_02.solution import parse, valid
 
 
 FIXDIR = os.path.join(
@@ -17,14 +17,15 @@ def test_parse():
         "value": "abcde",
         "policy": {
             "required": "a",
-            "min": 1,
-            "max": 3,
+            "places": [0, 2],
         },
     }
 
 
 def test_valid():
     with open(os.path.join(FIXDIR, "testfile.txt")) as f:
-        valid = num_valid(f)
+        passwords = list(parse(f))
 
-    assert valid == 2
+    assert valid(passwords[0])
+    assert not valid(passwords[1])
+    assert not valid(passwords[2])
