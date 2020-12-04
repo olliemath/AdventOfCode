@@ -1,26 +1,25 @@
 def parse(lines):
     for line in lines:
-        bounds, letter, value = line.strip().split()
-        min_, max_ = map(int, bounds.split("-"))
+        places, letter, value = line.strip().split()
+        places = [int(p) - 1 for p in places.split("-")]
         letter = letter[0]
 
         yield {
             "value": value,
             "policy": {
                 "required": letter,
-                "min": min_,
-                "max": max_,
+                "places": places,
             },
         }
 
 
 def valid(password):
     letter = password["policy"]["required"]
-    min_ = password["policy"]["min"]
-    max_ = password["policy"]["max"]
-    count = sum(1 for c in password["value"] if c == letter)
+    places = password["policy"]["places"]
+    value = password["value"]
 
-    return min_ <= count <= max_
+    count = sum(value[p] == letter for p in places)
+    return count == 1
 
 
 def num_valid(lines):
