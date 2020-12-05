@@ -1,10 +1,10 @@
-pub fn solve(input: Vec<String>) {
+pub fn solve(input: &Vec<String>) {
     let parsed = parse(input);
     println!("Pair: {:?}", find_product(&parsed, 2));
     println!("Triple: {:?}", find_product(&parsed, 3));
 }
 
-fn parse(input: Vec<String>) -> Vec<i32> {
+fn parse(input: &Vec<String>) -> Vec<i32> {
     input.iter().map(|i| i.parse::<i32>().unwrap()).collect()
 }
 
@@ -50,14 +50,14 @@ mod tests {
     #[test]
     fn test_parse() {
         let input = fixture();
-        let parsed = parse(input);
+        let parsed = parse(&input);
         assert_eq!(parsed, vec!{1721, 979, 366, 299, 675, 1456});
     }
 
     #[test]
     fn test_find_tuple() {
         let input = fixture();
-        let parsed = parse(input);
+        let parsed = parse(&input);
 
         assert_eq!(find_tuple(&parsed, 2), Some(vec!{1721, 299}));
         assert_eq!(find_tuple(&parsed, 3), Some(vec!{979, 366, 675}));
@@ -66,7 +66,7 @@ mod tests {
     #[test]
     fn test_find_product() {
         let input = fixture();
-        let parsed = parse(input);
+        let parsed = parse(&input);
 
         assert_eq!(find_product(&parsed, 2), Some(514579));
         assert_eq!(find_product(&parsed, 3), Some(241861950));

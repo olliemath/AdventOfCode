@@ -3,6 +3,7 @@ use std::fs;
 use std::io::{self, BufRead};
 
 mod day_01;
+mod day_05;
 
 
 fn load(filename: String) -> Vec<String> {
@@ -35,7 +36,8 @@ fn main() {
     let input = format!("{}/day_{:02}.txt", args[2], day);
 
     match day {
-        1 => day_01::solve(load(input)),
+        1 => day_01::solve(&load(input)),
+        5 => day_05::solve(&load(input)),
         _ => panic!("No solution for {} provided", day),
     }
 }
