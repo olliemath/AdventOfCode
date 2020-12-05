@@ -1,6 +1,12 @@
+use std::collections::HashSet;
+
 pub fn solve(input: &Vec<String>) {
-    let highest = parse_boarding_passes(input).iter().map(|t| t.2).max().unwrap();
+    let passes = parse_boarding_passes(input);
+    let highest = passes.iter().map(|t| t.2).max().unwrap();
     println!("Highest seat id: {}", highest);
+
+    let missing = find_missing_seat_ids(passes);
+    println!("Missing ids: {:?}", missing);
 }
 
 
@@ -18,6 +24,22 @@ fn parse_boarding_pass(input: String) -> (u8, u8, u16) {
 
     let seat_id = row as u16 * 8 + col as u16;
     (row, col, seat_id)
+}
+
+
+fn find_missing_seat_ids(passes: Vec<(u8, u8, u16)>) -> Vec<u16> {
+    let highest = passes.iter().map(|t| t.2).max().unwrap();
+    let lowest = passes.iter().map(|t| t.2).min().unwrap();
+    let existing: HashSet<u16> = passes.iter().map(|t| t.2).collect();
+
+    let mut missing = Vec::new();
+    for id in lowest..highest+1 {
+        if !existing.contains(&id) {
+            missing.push(id);
+        }
+    }
+
+    missing
 }
 
 #[cfg(test)]
@@ -41,5 +63,13 @@ mod tests {
         let expected: Vec<(u8, u8, u16)> = vec![(70, 7, 567), (14, 7, 119), (102, 4, 820)];
 
         assert_eq!(parse_boarding_passes(&passes), expected);
+    }
+
+    #[test]
+    fn test_find_missing_seat_ids() {
+        let input = vec![(2, 0, 4), (2, 1, 5), (3, 1, 7), (4, 0, 8), (5, 0, 10)];
+        let missing = find_missing_seat_ids(input);
+
+        assert_eq!(missing, vec![6, 9]);
     }
 }
