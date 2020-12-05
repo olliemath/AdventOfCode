@@ -76,3 +76,4 @@ venv*
 base_image/base_service/api/static/swagger-ui/
 .expected
 input/
+target/
