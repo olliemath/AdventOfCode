@@ -4,6 +4,7 @@ use std::io::{self, BufRead};
 
 mod day_01;
 mod day_05;
+mod day_06;
 
 
 fn load(filename: String) -> Vec<String> {
@@ -38,6 +39,7 @@ fn main() {
     match day {
         1 => day_01::solve(&load(input)),
         5 => day_05::solve(&load(input)),
+        6 => day_06::solve(&load(input)),
         _ => panic!("No solution for {} provided", day),
     }
 }
