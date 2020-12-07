@@ -1,10 +1,11 @@
 use std::collections::HashSet;
 
-pub fn solve(input: &Vec<String>) {
-    println!("Yeses: {}", total_yeses_all(&parse(input)));
+pub fn solve(input: &[String]) {
+    println!("Part1: {}", total_yeses_any(&parse(input)));
+    println!("Part2: {}", total_yeses_all(&parse(input)));
 }
 
-pub fn parse(input: &Vec<String>) -> Vec<Vec<String>> {
+pub fn parse(input: &[String]) -> Vec<Vec<String>> {
     let mut parsed = Vec::new();
     let mut group: Vec<String> = Vec::new();
 
@@ -12,23 +13,21 @@ pub fn parse(input: &Vec<String>) -> Vec<Vec<String>> {
         let stripped = line.trim();
         if stripped != "" {
             group.push(String::from(stripped));
-        } else {
-            if group.len() > 0 {
-                parsed.push(group);
-                group = Vec::new();
-            }
+        } else if !group.is_empty() {
+            parsed.push(group);
+            group = Vec::new();
         }
     }
 
     // Possible final group
-    if group.len() > 0 {
+    if !group.is_empty() {
         parsed.push(group);
     }
 
     parsed
 }
 
-fn num_of_yeses(input: &Vec<String>) -> usize {
+fn num_of_yeses(input: &[String]) -> usize {
     let mut yeses = HashSet::new();
     for row in input {
         for b in row.as_bytes().iter() {
@@ -38,26 +37,25 @@ fn num_of_yeses(input: &Vec<String>) -> usize {
     yeses.len()
 }
 
-fn num_common_yeses(input: &Vec<String>) -> usize {
-    let mut yeses: HashSet<u8> = "abcdefghijklmnopqrstuvwxyz"
-        .as_bytes()
+fn num_common_yeses(input: &[String]) -> usize {
+    let mut yeses: HashSet<u8> = b"abcdefghijklmnopqrstuvwxyz"
         .iter()
         .cloned()
         .collect();
 
     for row in input {
-        let lookup: HashSet<u8> = row.as_bytes().iter().map(|b| *b).collect();
+        let lookup: HashSet<u8> = row.as_bytes().iter().copied().collect();
         yeses = yeses.intersection(&lookup).cloned().collect();
     }
 
     yeses.len()
 }
 
-fn total_yeses_any(input: &Vec<Vec<String>>) -> usize {
+fn total_yeses_any(input: &[Vec<String>]) -> usize {
     input.iter().map(|v| num_of_yeses(v)).sum()
 }
 
-fn total_yeses_all(input: &Vec<Vec<String>>) -> usize {
+fn total_yeses_all(input: &[Vec<String>]) -> usize {
     input.iter().map(|v| num_common_yeses(v)).sum()
 }
 
