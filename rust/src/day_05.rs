@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-pub fn solve(input: &Vec<String>) {
+pub fn solve(input: &[String]) {
     let passes = parse_boarding_passes(input);
     let highest = passes.iter().map(|t| t.2).max().unwrap();
     println!("Highest seat id: {}", highest);
@@ -10,7 +10,7 @@ pub fn solve(input: &Vec<String>) {
 }
 
 
-fn parse_boarding_passes(input: &Vec<String>) -> Vec<(u8, u8, u16)> {
+fn parse_boarding_passes(input: &[String]) -> Vec<(u8, u8, u16)> {
     input.iter().map(|s| parse_boarding_pass(s.clone())).collect()
 }
 
@@ -33,7 +33,7 @@ fn find_missing_seat_ids(passes: Vec<(u8, u8, u16)>) -> Vec<u16> {
     let existing: HashSet<u16> = passes.iter().map(|t| t.2).collect();
 
     let mut missing = Vec::new();
-    for id in lowest..highest+1 {
+    for id in lowest..=highest {
         if !existing.contains(&id) {
             missing.push(id);
         }

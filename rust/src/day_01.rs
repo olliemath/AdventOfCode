@@ -1,14 +1,14 @@
-pub fn solve(input: &Vec<String>) {
+pub fn solve(input: &[String]) {
     let parsed = parse(input);
     println!("Pair: {:?}", find_product(&parsed, 2));
     println!("Triple: {:?}", find_product(&parsed, 3));
 }
 
-fn parse(input: &Vec<String>) -> Vec<i32> {
+fn parse(input: &[String]) -> Vec<i32> {
     input.iter().map(|i| i.parse::<i32>().unwrap()).collect()
 }
 
-fn find_tuple(input: &Vec<i32>, size: usize) -> Option<Vec<i32>> {
+fn find_tuple(input: &[i32], size: usize) -> Option<Vec<i32>> {
     // TODO: support arbitrary sized loops (use a stack?)
     if size != 2 && size != 3 {
         panic!("Size {} tuples not supported", size);
@@ -33,7 +33,7 @@ fn find_tuple(input: &Vec<i32>, size: usize) -> Option<Vec<i32>> {
     None
 }
 
-fn find_product(input: &Vec<i32>, size: usize) -> Option<i32> {
+fn find_product(input: &[i32], size: usize) -> Option<i32> {
     find_tuple(input, size).map(|tup| tup.iter().product())
 }
 

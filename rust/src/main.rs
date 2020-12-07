@@ -7,7 +7,6 @@ mod day_05;
 mod day_06;
 mod day_07;
 
-
 fn load(filename: String) -> Vec<String> {
     match _load_impl(&filename) {
         Ok(v) => v,
@@ -28,11 +27,13 @@ fn _load_impl(filename: &str) -> Result<Vec<String>, io::Error> {
     Ok(result)
 }
 
-
 fn main() {
-
     let args: Vec<String> = env::args().collect();
-    assert_eq!(args.len(), 3, "Wrong number of args. Usage:\n    runner day input_dir\n");
+    assert_eq!(
+        args.len(),
+        3,
+        "Wrong number of args. Usage:\n    runner day input_dir\n"
+    );
 
     let day = args[1].parse::<i32>().expect("day should be an integer");
     let input = format!("{}/day_{:02}.txt", args[2], day);

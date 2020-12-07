@@ -1,11 +1,9 @@
 use std::collections::{HashMap, HashSet, VecDeque};
-use std::time::Instant;
 type BagSpec = HashMap<String, HashMap<String, u8>>;
 
-pub fn solve(input: &Vec<String>) {
+pub fn solve(input: &[String]) {
     let specs = parse_specs(input);
 
-    let now = Instant::now();
     let containers = find_containers(String::from("shiny gold"), &specs);
     println!("Shiny Gold can be put in {} bags", containers.len());
 
@@ -15,19 +13,18 @@ pub fn solve(input: &Vec<String>) {
         "Shiny Gold requires {} bags (not including itself)",
         required - 1
     );
-    println!("Solved in {}ms", now.elapsed().as_millis());
 }
 
 fn parse_raw_contains(raw: &str) -> (String, u8) {
-    let pieces: Vec<&str> = raw.split(" ").collect();
+    let pieces: Vec<&str> = raw.split(' ').collect();
     let color = pieces[1..pieces.len() - 1].join(" ");
-    let num: u8 =
-        u8::from_str_radix(pieces[0], 10).expect(&format!("{} should be a number", pieces[0]));
+    let num: u8 = pieces[0].parse()
+        .unwrap_or_else(|_| panic!("{} should be a number", pieces[0]));
 
     (color, num)
 }
 
-fn parse_specs(input: &Vec<String>) -> BagSpec {
+fn parse_specs(input: &[String]) -> BagSpec {
     let mut bags = HashMap::new();
 
     for line in input {
@@ -70,7 +67,7 @@ fn find_containers(color: String, spec: &BagSpec) -> HashSet<String> {
 
     let mut result = reversed.get(&color).unwrap().clone();
     let mut to_check = result.clone();
-    while to_check.len() > 0 {
+    while !to_check.is_empty() {
         let mut parents = HashSet::new();
         for color in to_check.iter() {
             parents = parents
@@ -97,13 +94,13 @@ fn topological_sort(spec: &BagSpec) -> Vec<String> {
     // Begin by processing the root nodes
     let mut to_process: VecDeque<String> = spec
         .iter()
-        .filter(|(_, v)| v.len() == 0)
+        .filter(|(_, v)| v.is_empty())
         .map(|(k, _)| k)
         .cloned()
         .collect();
     let mut processed = Vec::new();
 
-    while to_process.len() > 0 {
+    while !to_process.is_empty() {
         let subtree_root = to_process.pop_back().unwrap();
         processed.push(subtree_root.clone());
 
@@ -116,7 +113,7 @@ fn topological_sort(spec: &BagSpec) -> Vec<String> {
                     .get_mut(parent)
                     .unwrap()
                     .remove(&subtree_root);
-                if adjacency_matrix.get(parent).unwrap().len() == 0 {
+                if adjacency_matrix.get(parent).unwrap().is_empty() {
                     // This bag contains no bags not already processed or earlier in the to_process queue
                     to_process.push_front(parent.clone());
                 }
@@ -126,7 +123,7 @@ fn topological_sort(spec: &BagSpec) -> Vec<String> {
         rev_matrix.remove(&subtree_root);
     }
 
-    if rev_matrix.len() > 0 {
+    if !rev_matrix.is_empty() {
         panic!("Found an infinite loop for bags: it's bags all the way down?");
     }
 
