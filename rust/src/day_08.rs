@@ -67,7 +67,7 @@ impl History {
         let mut state = if self.history.is_empty() {
             StateMachine{position: 0, accumulator: 0}
         } else {
-            self.history.pop().unwrap().clone()
+            self.history.pop().unwrap()
         };
 
         let mut result: Result<i32, i32> = Err(-1);
