@@ -16,6 +16,8 @@ mod day_14;
 mod day_15;
 mod day_16;
 mod day_17;
+mod day_18;
+mod day_19;
 
 fn load(filename: String) -> Vec<String> {
     match _load_impl(&filename) {
@@ -63,6 +65,8 @@ fn main() {
         15 => day_15::solve(&load(input)),
         16 => day_16::solve(&load(input)),
         17 => day_17::solve(&load(input)),
+        18 => day_18::solve(&load(input)),
+        19 => day_19::solve(&load(input)),
         _ => panic!("No solution for {} provided", day),
     }
 }
