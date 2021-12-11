@@ -1,19 +1,78 @@
-from day_11.solution import parse, compute1, compute2
+from day_11.solution import parse, compute, step
 
 
-data = """"""
+data = """5483143223
+2745854711
+5264556173
+6141336146
+6357385478
+4167524645
+2176841721
+6882881134
+4846848554
+5283751526"""
 
 
 def test_parse():
     parsed = parse(data)
-    assert parsed is None
+    assert parsed
 
 
-def test_compute1():
+def test_compute():
+    assert compute(parse(data)) == (1656, 195)
+
+
+def test_step_small():
+    parsed = [
+        [1, 1, 1, 1, 1],
+        [1, 9, 9, 9, 1],
+        [1, 9, 1, 9, 1],
+        [1, 9, 9, 9, 1],
+        [1, 1, 1, 1, 1],
+    ]
+    step(parsed)
+    assert parsed == [
+        [3, 4, 5, 4, 3],
+        [4, 0, 0, 0, 4],
+        [5, 0, 0, 0, 5],
+        [4, 0, 0, 0, 4],
+        [3, 4, 5, 4, 3],
+    ]
+    step(parsed)
+    assert parsed == [
+        [4, 5, 6, 5, 4],
+        [5, 1, 1, 1, 5],
+        [6, 1, 1, 1, 6],
+        [5, 1, 1, 1, 5],
+        [4, 5, 6, 5, 4],
+    ]
+
+
+def test_step():
     parsed = parse(data)
-    assert compute1(parsed) is None
-
-
-def test_compute2():
-    parsed = parse(data)
-    assert compute2(parsed) is None
+    step(parsed)
+    assert parsed == [
+        [6, 5, 9, 4, 2, 5, 4, 3, 3, 4],
+        [3, 8, 5, 6, 9, 6, 5, 8, 2, 2],
+        [6, 3, 7, 5, 6, 6, 7, 2, 8, 4],
+        [7, 2, 5, 2, 4, 4, 7, 2, 5, 7],
+        [7, 4, 6, 8, 4, 9, 6, 5, 8, 9],
+        [5, 2, 7, 8, 6, 3, 5, 7, 5, 6],
+        [3, 2, 8, 7, 9, 5, 2, 8, 3, 2],
+        [7, 9, 9, 3, 9, 9, 2, 2, 4, 5],
+        [5, 9, 5, 7, 9, 5, 9, 6, 6, 5],
+        [6, 3, 9, 4, 8, 6, 2, 6, 3, 7],
+    ]
+    step(parsed)
+    assert parsed == [
+        [8, 8, 0, 7, 4, 7, 6, 5, 5, 5],
+        [5, 0, 8, 9, 0, 8, 7, 0, 5, 4],
+        [8, 5, 9, 7, 8, 8, 9, 6, 0, 8],
+        [8, 4, 8, 5, 7, 6, 9, 6, 0, 0],
+        [8, 7, 0, 0, 9, 0, 8, 8, 0, 0],
+        [6, 6, 0, 0, 0, 8, 8, 9, 8, 9],
+        [6, 8, 0, 0, 0, 0, 5, 9, 4, 3],
+        [0, 0, 0, 0, 0, 0, 7, 4, 5, 6],
+        [9, 0, 0, 0, 0, 0, 0, 8, 7, 6],
+        [8, 7, 0, 0, 0, 0, 6, 8, 4, 8],
+    ]
