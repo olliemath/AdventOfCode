@@ -23,6 +23,9 @@ for dir in dirs:
     t0 = time.time()
     solution = module.solve(parsed)
     t1 = time.time()
-    print_green(f"    Solution: {solution}")
+    if isinstance(solution, tuple) and len(solution) > 1:
+        print_green(f"    Solution:\n      {solution[0]}\n      {solution[1]}")
+    else:
+        print_green(f"    Solution: {solution}")
     print_red(f"    [{t1-t0:.4f}s]")
     print()
