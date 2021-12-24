@@ -1,16 +1,21 @@
 import importlib
 import os
 import time
+import sys
 
 from util import print_blue, print_green, print_red, print_yellow, print_header
 from client import get_day
 
+
 print_header("=== Merry Christmas! ===\n")
 
 dirs = sorted(dir for dir in os.listdir(".") if dir.startswith("day_"))
+args = sys.argv[1:]
 
 for dir in dirs:
     day = dir.split("_")[1]
+    if args and int(day) != int(args[0]):
+        continue
     print(f"Day {day}")
 
     data = get_day(day)
