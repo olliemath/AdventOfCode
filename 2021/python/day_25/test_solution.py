@@ -1,0 +1,69 @@
+from day_25.solution import solve, parse, step
+
+
+data = """...>...
+.......
+......>
+v.....>
+......>
+.......
+..vvv.."""
+
+
+def test_parse():
+    p = parse(data)
+    assert p[0] == list("...>...")
+
+
+def test_step():
+    p = parse(data)
+
+    p = step(p)
+    assert p == parse("""..vv>..
+.......
+>......
+v.....>
+>......
+.......
+....v..""")
+
+    p = step(p)
+    assert p == parse("""....v>.
+..vv...
+.>.....
+......>
+v>.....
+.......
+.......""")
+
+    p = step(p)
+    assert p == parse("""......>
+..v.v..
+..>v...
+>......
+..>....
+v......
+.......""")
+
+    p = step(p)
+    assert p == parse(""">......
+..v....
+..>.v..
+.>.v...
+...>...
+.......
+v......""")
+
+
+def test_solve():
+    input = """v...>>.vv>
+.vv>>.vv..
+>>.>v>...v
+>>v>>.>.v.
+v>v.vv.v..
+>.>>..v...
+.vv..>.>v.
+v.v..>>v.v
+....v..v.>
+"""
+    assert solve(parse(input)) == 58
