@@ -14,7 +14,7 @@ def get_day(day):
     filepath = DATA / (day + ".txt")
     if filepath.exists():
         with open(filepath) as f:
-            return f.read().strip()
+            return f.read()
 
     # Download and cache the input
     import requests
