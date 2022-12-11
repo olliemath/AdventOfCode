@@ -17,7 +17,7 @@ def solve(input):
 
 
 def simulate(input, length):
-    visited = set([(0, 0)])
+    visited = {(0, 0)}
     rope = [[0, 0] for _ in range(length)]
 
     for dx, dy in input:
@@ -27,7 +27,7 @@ def simulate(input, length):
             n, d, ix = abs(dy), int(dy / abs(dy)), 1
 
         for _ in range(n):
-            rope[0][ix] += d
+            rope[0][ix] += d  # head
 
             for hpos, tpos in zip(rope, rope[1:]):
                 if linf(hpos, tpos) > 1:
@@ -41,9 +41,7 @@ def simulate(input, length):
                         tpos[1] += 1
 
             visited.add(tuple(rope[-1]))
-        # print_grid(hpos, tpos)
 
-    # print_final(visited)
     return len(visited)
 
 
