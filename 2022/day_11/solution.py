@@ -1,3 +1,6 @@
+import math
+
+
 def parse(data):
     return data.strip().split("\n\n")
 
@@ -8,9 +11,7 @@ def solve(input):
         round(monkeys1)
 
     monkeys2 = [Monkey(text) for text in input]
-    mod = 1
-    for monkey in monkeys2:
-        mod *= monkey.div
+    mod = math.lcm(*[monkey.div for monkey in monkeys2])
     for monkey in monkeys2:
         monkey.mod = mod
     for _ in range(10_000):
@@ -65,7 +66,7 @@ class Monkey:
                 item //= 3
             target = self.test(item)
             monkeys[target].items.append(item)
-        self.items = []
+        self.items.clear()
 
     def __repr__(self):
         return f"Monkey({self.items}, inspected={self.inspected})"
