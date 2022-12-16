@@ -1,4 +1,5 @@
-from .solution import parse, part1, part1_slow, part2
+import itertools
+from .solution import manhatten, parse, part1, part2
 
 
 data = """
@@ -26,3 +27,29 @@ def test_solution():
         assert part1(list(parse(data)), y) == part1_slow(list(parse(data)), y)
 
     assert part2(list(parse(data)), 20) == 56000011
+
+
+def part1_slow(input, y):
+    # Here for testing purposes!
+    biggest_radius = max(manhatten(s, b) for s, b in input)
+
+    xmin = min(p[0] for p in itertools.chain(*input)) - biggest_radius
+    xmax = max(p[0] for p in itertools.chain(*input)) + biggest_radius
+    ymin = min(p[1] for p in itertools.chain(*input)) - biggest_radius
+    ymax = max(p[1] for p in itertools.chain(*input)) + biggest_radius
+
+    grid = [
+        ["." for _ in range(xmin, xmax + 1)] for _ in range(ymin, ymax + 1)
+    ]
+    for (sx, sy), (bx, by) in input:
+        grid[sy - ymin][sx - xmin] = "S"
+        grid[by - ymin][bx - xmin] = "B"
+
+        radius = manhatten((sx, sy), (bx, by))
+        for dy in range(-radius, radius + 1):
+            for dx in range(-radius + abs(dy), radius - abs(dy) + 1):
+                if grid[sy - ymin + dy][sx - xmin + dx] == ".":
+                    grid[sy - ymin + dy][sx - xmin + dx] = "#"
+
+    # printgrid(grid)
+    return grid[y - ymin].count("#")

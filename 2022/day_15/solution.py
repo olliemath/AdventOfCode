@@ -1,4 +1,3 @@
-import itertools
 import re
 
 
@@ -30,7 +29,7 @@ def part1(input, y):
         overlap = radius - abs(sy - y)
         if overlap >= 0:
             segments = append_segment(
-                segments, (sx - overlap, sx + overlap, 1)
+                segments, (sx - overlap, sx + overlap, y)
             )
 
         if by == y:
@@ -54,27 +53,27 @@ def part2(input, bound):
     input = sorted(input, key=lambda pair: pair[0][0] - linf(*pair))
 
     # The big (x, y) grid we're checking is a (u, v) diamond with
-    # 0 <= u + v <= 2 * bound, -bound <= u - v <= bound
-    # segments = [(0, 0, -1)]
+    # 0 <= u + v <= 2 * bound, 0 <= u - v <= 2 * bound
     segments = [(0, 0, -1)]
 
     for sensor, beacon in input:
         radius = linf(sensor, beacon)
         # Check no points are to the right of the wave and left of this square
+        # First build the left-hand edge of this square as a segment
         u_outer = sensor[0] - radius - 1
-        for v in range(
+        to_cover = (
             max(sensor[1] - radius, -u_outer, u_outer - 2 * bound),
             min(sensor[1] + radius + 1, u_outer, 2 * bound - u_outer),
-        ):
-            # Check for points to the left
-            for sv_lower, sv_upper, su in segments:
-                if sv_lower <= v <= sv_upper:
-                    if su < u_outer:
-                        return result(u_outer, v)
-                    break
-            else:
-                # no segment to the left of this v
-                return result(u_outer, v)
+            u_outer,
+        )
+        if to_cover[0] < to_cover[1]:
+            # Try and append the segment to the wave: this should have no
+            # effect, the left-hand edge should be fully behind the frontier!
+            new_segments = append_segment(segments, to_cover)
+            if new_segments != segments:
+                for segment in new_segments:
+                    if segment not in segments:
+                        return result(u_outer, segment[0])
 
         # Now we need to update the segments
         u_upper = sensor[0] + radius
@@ -84,6 +83,14 @@ def part2(input, bound):
 
 
 def append_segment(segments, segment):
+    # The heart of our solution. Take a bunch of disjoint line segments
+    # with heights - and a new segment. Produce a new family of disjoint
+    # line segments with the highest possible heights, example:
+    #            ____                       ____
+    #    ____  ~~~~       ===>      ____  ~~
+    # ___    ___                 ___    __
+    # where the squigly line is the new segment.
+    # Probably there is a neater algorithm to do this!
     to_process = [segment]
     new_segments = segments
 
@@ -124,9 +131,10 @@ def append_segment(segments, segment):
                         to_process.append((vu + 1, other_vu, other_u))
                     continue
                 else:
-                    new_segments.append(other)
+                    new_segments.extend(segments[k:])
                     if vl <= other_vl - 1:
                         to_process.append((vl, other_vl - 1, u))
+                    break
 
             elif vl <= other_vu and vu >= other_vu:
                 if u >= other_u:
@@ -134,9 +142,10 @@ def append_segment(segments, segment):
                         to_process.append((other_vl, vl - 1, other_u))
                     continue
                 else:
-                    new_segments.append(other)
+                    new_segments.extend(segments[k:])
                     if other_vu + 1 <= vu:
                         to_process.append((other_vu + 1, vu, u))
+                    break
             else:
                 new_segments.append(other)  # doesn't overlap
 
@@ -165,29 +174,3 @@ def unrotate(u, v):
 def result(u, v):
     x, y = unrotate(u, v)
     return 4_000_000 * x + y
-
-
-def part1_slow(input, y):
-    # Basic way to check we have the right answer!
-    biggest_radius = max(manhatten(s, b) for s, b in input)
-
-    xmin = min(p[0] for p in itertools.chain(*input)) - biggest_radius
-    xmax = max(p[0] for p in itertools.chain(*input)) + biggest_radius
-    ymin = min(p[1] for p in itertools.chain(*input)) - biggest_radius
-    ymax = max(p[1] for p in itertools.chain(*input)) + biggest_radius
-
-    grid = [
-        ["." for _ in range(xmin, xmax + 1)] for _ in range(ymin, ymax + 1)
-    ]
-    for (sx, sy), (bx, by) in input:
-        grid[sy - ymin][sx - xmin] = "S"
-        grid[by - ymin][bx - xmin] = "B"
-
-        radius = manhatten((sx, sy), (bx, by))
-        for dy in range(-radius, radius + 1):
-            for dx in range(-radius + abs(dy), radius - abs(dy) + 1):
-                if grid[sy - ymin + dy][sx - xmin + dx] == ".":
-                    grid[sy - ymin + dy][sx - xmin + dx] = "#"
-
-    # printgrid(grid)
-    return grid[y - ymin].count("#")
