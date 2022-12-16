@@ -1,6 +1,5 @@
 import re
 import heapq
-from collections import defaultdict
 
 
 def parse(data):
@@ -32,7 +31,7 @@ def part2(values, shortest_paths):
 
 
 def build_shortest_paths(input):
-    paths = defaultdict(dict)
+    paths = {}
 
     todo = list(reversed(input))
     while todo:
