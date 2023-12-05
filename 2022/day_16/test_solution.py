@@ -50,26 +50,26 @@ def test_find_best_path():
     shortest_paths = build_shortest_paths(input)
 
     best_path, best_score = find_best_path(
-        values, shortest_paths, ["AA"], 0, 3
+        values, shortest_paths, ["AA"], 3
     )
     assert best_path == ["AA", "DD"]
     assert best_score == 20
 
     best_path, best_score = find_best_path(
-        values, shortest_paths, ["AA"], 0, 5
+        values, shortest_paths, ["AA"], 5
     )
     assert best_path == ["AA", "DD", "EE"]
     assert best_score == 20 * 3 + 3
 
     best_path, best_score = find_best_path(
-        values, shortest_paths, ["AA"], 0, 7
+        values, shortest_paths, ["AA"], 7
     )
     assert best_path == ["AA", "DD", "BB"]
     assert best_score == 20 * 5 + 13 * 2
 
     expected = ["AA", "DD", "BB", "JJ", "HH", "EE", "CC"]
     best_path, best_score = find_best_path(
-        values, shortest_paths, ["AA"], 0, 30
+        values, shortest_paths, ["AA"], 30
     )
     assert best_path == expected
     assert best_score == 1651
@@ -81,6 +81,6 @@ def test_find_best_2xpath():
     shortest_paths = build_shortest_paths(input)
 
     best_path, best_score = find_best_2xpath(
-        values, shortest_paths, [["AA"], ["AA"]], 0, (26, 26)
+        values, shortest_paths, [["AA"], ["AA"]], (26, 26)
     )
     assert best_score == 1707
