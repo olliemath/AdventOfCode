@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 def parse(data):
     lines = data.strip().split("\n")
     lines = [line.strip().split(": ")[1] for line in lines]

@@ -1,11 +1,12 @@
+from __future__ import annotations
+
 import importlib
 import os
-import time
 import sys
+import time
 
-from util import print_blue, print_green, print_red, print_yellow, print_header
 from client import get_day
-
+from util import print_blue, print_green, print_header, print_red, print_yellow
 
 print_header("=== Merry Christmas! ===\n")
 

@@ -1,5 +1,6 @@
-from .solution import parse, part1, part2
+from __future__ import annotations
 
+from .solution import parse, part1, part2
 
 data = """
 seeds: 79 14 55 13

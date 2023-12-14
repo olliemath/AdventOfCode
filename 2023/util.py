@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 HEADER = "\033[95m"
 BLUE = "\033[94m"
 CYAN = "\033[96m"

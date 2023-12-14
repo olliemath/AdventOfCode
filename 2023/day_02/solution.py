@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 def parse(data):
     games = []
     for line in data.strip().split("\n"):

@@ -1,5 +1,6 @@
-from .solution import parse, solve
+from __future__ import annotations
 
+from .solution import parse, solve
 
 data = """
 Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green

@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 def parse(data):
     chunks = data.strip().split("\n\n")
     seeds = list(map(int, chunks[0].strip().split(":")[1].split()))

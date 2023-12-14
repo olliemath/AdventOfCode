@@ -1,5 +1,6 @@
-from .solution import parse, solve
+from __future__ import annotations
 
+from .solution import parse, solve
 
 data = """1abc2
 pqr3stu8vwx

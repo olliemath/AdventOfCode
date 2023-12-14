@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 REPLACEMENTS = {
     "one": "1",
     "two": "2",

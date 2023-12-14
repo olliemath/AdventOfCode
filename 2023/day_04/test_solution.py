@@ -1,5 +1,6 @@
-from .solution import parse, solve, part1
+from __future__ import annotations
 
+from .solution import parse, part1, solve
 
 data = """
 Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
