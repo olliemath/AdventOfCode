@@ -62,6 +62,8 @@ def solve(input):
     part1 = sum(numbers)
 
     # Find gears adjacent to 2 numbers
-    part2 = sum(numbers[0] * numbers[1] for numbers in gears.values() if len(numbers) == 2)
+    part2 = sum(
+        numbers[0] * numbers[1] for numbers in gears.values() if len(numbers) == 2
+    )
 
     return part1, part2

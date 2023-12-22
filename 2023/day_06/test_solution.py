@@ -13,7 +13,6 @@ def test_solution():
     assert part2(parse(data)) == 71503
 
 
-
 def test_solve_quadratic():
     assert solve_quadratic(7, 9) == (2, 5)
     assert solve_quadratic(15, 40) == (4, 11)

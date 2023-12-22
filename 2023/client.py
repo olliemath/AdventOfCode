@@ -20,6 +20,7 @@ def get_day(day):
 
     # Download and cache the input
     import requests
+
     resp = requests.get(
         f"https://adventofcode.com/2023/day/{int(day)}/input", cookies=COOKIES
     )

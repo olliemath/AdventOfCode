@@ -40,10 +40,10 @@ def expand(universe, factor=2):
             if c == "#":
                 result[(i + di, j + dj)] = len(result) + 1
             elif j in empty_cols:
-                dj += (factor-1)
+                dj += factor - 1
 
         if i in empty_rows:
-            di += (factor - 1)
+            di += factor - 1
 
     return result
 

@@ -6,7 +6,12 @@ def parse(data):
     for line in data.strip().split("\n"):
         game = []
         for round_ in line.split(":")[1].strip().split("; "):
-            game.append({sample.split()[1]: int(sample.split()[0]) for sample in round_.split(", ")})
+            game.append(
+                {
+                    sample.split()[1]: int(sample.split()[0])
+                    for sample in round_.split(", ")
+                }
+            )
 
         games.append(game)
 
@@ -22,7 +27,11 @@ def part1(input):
 
     for n, game in enumerate(input):
         for round_ in game:
-            if round_.get("red", 0) > 12 or round_.get("green", 0) > 13 or round_.get("blue", 0) > 14:
+            if (
+                round_.get("red", 0) > 12
+                or round_.get("green", 0) > 13
+                or round_.get("blue", 0) > 14
+            ):
                 break
         else:
             total += n + 1

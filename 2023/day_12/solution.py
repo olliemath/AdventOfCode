@@ -57,11 +57,13 @@ def consuminate(line, required, fin, seen=None):
                     elif c == "#":  # some # to the left :(
                         break
             else:
-                seen[(len(required), offset)] = extra = consuminate(line, required, offset, seen)
+                seen[(len(required), offset)] = extra = consuminate(
+                    line, required, offset, seen
+                )
                 total += extra
 
         # check no # gets introduced to the right
-        if line[offset + len(req) -1] == "#":
+        if line[offset + len(req) - 1] == "#":
             break
 
     required.append(req)
@@ -83,7 +85,6 @@ def combos2(line, required):
 
 @lru_cache
 def consuminate2(line, requiremets):
-
     if len(requiremets) == 0:
         return "#" not in line
     if sum(requiremets) + len(requiremets) - 1 > len(line):
@@ -96,7 +97,11 @@ def consuminate2(line, requiremets):
     if line[0] == "?":
         total += consuminate2(line[1:], requiremets)
 
-    if "." not in line[:requiremets[0]] and (len(line) == requiremets[0] or len(line) > requiremets[0] and line[requiremets[0]] != "#"):
-        total += consuminate2(line[requiremets[0] + 1:], requiremets[1:])
+    if "." not in line[: requiremets[0]] and (
+        len(line) == requiremets[0]
+        or len(line) > requiremets[0]
+        and line[requiremets[0]] != "#"
+    ):
+        total += consuminate2(line[requiremets[0] + 1 :], requiremets[1:])
 
     return total

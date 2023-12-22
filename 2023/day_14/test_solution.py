@@ -20,7 +20,8 @@ def test_cycle():
     grid = parse(data)
 
     grid = cycle(grid)
-    assert grid == parse("""
+    assert grid == parse(
+        """
 .....#....
 ....#...O#
 ...OO##...
@@ -31,10 +32,12 @@ def test_cycle():
 ......OOOO
 #...O###..
 #..OO#....
-    """)
+    """
+    )
 
     grid = cycle(grid)
-    assert grid == parse("""
+    assert grid == parse(
+        """
 .....#....
 ....#...O#
 .....##...
@@ -45,10 +48,12 @@ def test_cycle():
 .......OOO
 #..OO###..
 #.OOO#...O
-    """)
+    """
+    )
 
     grid = cycle(grid)
-    assert grid == parse("""
+    assert grid == parse(
+        """
 .....#....
 ....#...O#
 .....##...
@@ -59,7 +64,8 @@ def test_cycle():
 .......OOO
 #...O###.O
 #.OOO#...O
-    """)
+    """
+    )
 
 
 def test_solution():

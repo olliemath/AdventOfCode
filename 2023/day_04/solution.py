@@ -5,7 +5,9 @@ def parse(data):
     lines = data.strip().split("\n")
     lines = [line.strip().split(": ")[1] for line in lines]
     lines = [line.split(" | ") for line in lines]
-    return [(list(map(int, lh.split())), list(map(int, rh.split()))) for lh, rh in lines]
+    return [
+        (list(map(int, lh.split())), list(map(int, rh.split()))) for lh, rh in lines
+    ]
 
 
 def solve(input):

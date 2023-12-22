@@ -58,7 +58,6 @@ def get_component(input, i, j):
 
 
 def extend(input, i, j, d):
-
     char = get(input, i, j)
     result = {(i, j): (char, d)}
     while char != "S":
@@ -111,7 +110,7 @@ def winding_number(i, j, input, curve):
                     k += 1
                 other = input[i][k]
                 if other == "J":  # FJ
-                    count += (1 if d == "r" else -1)
+                    count += 1 if d == "r" else -1
             elif char == "L":
                 # Look ahead to get all stretches like L---J
                 k = fj + 1
@@ -119,6 +118,6 @@ def winding_number(i, j, input, curve):
                     k += 1
                 other = input[i][k]
                 if other == "7":  # L7
-                    count += (1 if d == "u" else -1)
+                    count += 1 if d == "u" else -1
 
     return count

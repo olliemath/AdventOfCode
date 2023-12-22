@@ -8,9 +8,7 @@ def parse(data):
     parsed = []
     for chunk in chunks[1:]:
         lines = chunk.strip().split("\n")
-        parsed.append(
-            [list(map(int, line.strip().split())) for line in lines[1:]]
-        )
+        parsed.append([list(map(int, line.strip().split())) for line in lines[1:]])
 
     return seeds, parsed
 
@@ -90,7 +88,9 @@ def map_range_once(start, end, submap):
                 fully_mapped = True
 
     elif start < source + length:
-        result.append((start + dest - source, min(end, source + length) + dest - source))
+        result.append(
+            (start + dest - source, min(end, source + length) + dest - source)
+        )
 
         if end > source + length:
             result.append((source + length, end))

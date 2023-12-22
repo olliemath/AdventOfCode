@@ -41,5 +41,4 @@ def cycle_length(input, start, stop):
                 cycle_lengths.append(k + 1)
                 break
 
-
     return math.lcm(*cycle_lengths)

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from .solution import parse, part1, part2, hash
+from .solution import hash, parse, part1, part2
 
 data = """
 rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7
