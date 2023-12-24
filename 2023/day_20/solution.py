@@ -14,11 +14,23 @@ def parse(data):
         type_name, outputs = spec.split(" -> ")
 
         if type_name == "broadcaster":
-            modules[type_name] = {"type": "b", "state": None, "out": outputs.split(", ")}
+            modules[type_name] = {
+                "type": "b",
+                "state": None,
+                "out": outputs.split(", "),
+            }
         elif type_name[0] == "%":
-            modules[type_name[1:]] = {"type": "%", "state": "off", "out": outputs.split(", ")}
+            modules[type_name[1:]] = {
+                "type": "%",
+                "state": "off",
+                "out": outputs.split(", "),
+            }
         elif type_name[0] == "&":
-            modules[type_name[1:]] = {"type": "&", "state": {}, "out": outputs.split(", ")}
+            modules[type_name[1:]] = {
+                "type": "&",
+                "state": {},
+                "out": outputs.split(", "),
+            }
 
     # now populate the input states of conjunction modules
     for mod_name, mod in modules.items():
@@ -38,7 +50,9 @@ def solve(input, watch_low=("qm", "jd", "pm", "nf")):
     seen_low = {}
 
     for k in tqdm.tqdm(range(5000)):
-        if (not watch_low and k == 1000) or (watch_low and len(seen_low) == len(watch_low)):
+        if (not watch_low and k == 1000) or (
+            watch_low and len(seen_low) == len(watch_low)
+        ):
             break
 
         pulse_queue = deque([("button", "broadcaster", "low")])

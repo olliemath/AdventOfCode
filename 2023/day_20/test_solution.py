@@ -18,6 +18,7 @@ broadcaster -> a
 &con -> output
 """
 
+
 def test_solution():
     assert solve(parse(data), watch_low=()) == (32000000, 1)
     assert solve(parse(data2), watch_low=()) == (11687500, 1)
